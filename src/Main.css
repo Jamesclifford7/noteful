@@ -1,0 +1,19 @@
+.note-display {
+    border: solid;
+    width: 50%;
+    display: inline-flex; 
+    flex-direction: column;
+    justify-content: right;
+    float: right;
+    margin-top: 0;
+    margin-right: 10px;
+}
+
+.note {
+    border: solid;
+    text-align: center;
+}
+
+button {
+    margin-bottom: 8px;
+}

@@ -1,29 +1,36 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import MyContext from './MyContext'
+import PropTypes from 'prop-types'
 
 
 class Note extends React.Component {
+    static contextType = MyContext
     render() {
-        const notesList = this.props.notes.map(note => note)   
+        const notesList = this.context.notes.map(note => note)   
         // console.log(this.props)     
         // console.log(notesList)
 
         return (
-            <div> 
+            <>
                 {
                     notesList.map((n, idx) => 
                         (n.id === this.props.match.params.noteId)
                         ? <div className="note" key={idx}>
                         <Link to={`/note/${n.id}`}><h4>{n.name}</h4></Link>
                         <p>{n.content}</p>
-                        <button>Delete Note</button>
+                        <Link to={'/'}><button data-nodeid={n.id} value={n.id} onClick={event => this.context.deleteHandler(event)}>Delete Note</button></Link>
                         </div>
                         : ""
                     )
                 }
-            </div>
+            </>    
         )
     }
+}
+
+Note.propTypes = {
+    props: PropTypes.object
 }
 
 export default Note

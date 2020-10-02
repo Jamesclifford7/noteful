@@ -1,0 +1,15 @@
+.folder-list {
+    display: inline-flex;
+    flex-direction: column;
+    width: 20%;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
+.folder {
+    border: solid; 
+}
+
+.folder h3 {
+    margin-left: 5px;
+}

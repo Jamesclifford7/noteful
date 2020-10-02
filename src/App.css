@@ -1,4 +1,20 @@
 .App {
-  text-align: center;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
+header h1 {
+    text-align: center;
+}
+
+/*
+.note-display {
+    flex: 1;
+}
+
+
+.App header .folder-list, .App .note-display {
+    display: inline-flex;
+
+}
+*/
