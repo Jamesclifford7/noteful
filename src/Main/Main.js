@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './Main.css'
-import MyContext from './MyContext'
+import MyContext from '../MyContext/MyContext'
+import FolderList from '../FolderList/FolderList'
 
 class Main extends React.Component {
     static contextType = MyContext
@@ -15,8 +16,11 @@ class Main extends React.Component {
         })
 
         return (
-            <div className="note-display">
-                {fullNotesList}
+            <div className="container">
+                <FolderList />
+                <div className="note-display">
+                    {fullNotesList}
+                </div>
             </div>
         )
     }

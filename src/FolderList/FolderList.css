@@ -13,3 +13,14 @@
 .folder h3 {
     margin-left: 5px;
 }
+
+.add-buttons {
+    border: solid;
+    margin: 0; 
+    padding: 10px;
+}
+
+button {
+    margin: 0 auto;
+}
+

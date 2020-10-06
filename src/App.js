@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
 import { Route, Link } from 'react-router-dom'
-import Main from './Main'
-import Folder from './Folder'
-import Note from './Note'
-import FolderList from './FolderList'
-import MyContext from './MyContext'
+import Main from './Main/Main'
+import Folder from './Folder/Folder'
+import Note from './Note/Note'
+import AddNote from './AddNote/AddNote'
+import MyContext from './MyContext/MyContext'
+import AddFolder from './AddFolder/AddFolder'
 import uuid from 'react-uuid'
-import ErrorBoundary from './ErrorBoundary'
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 class App extends React.Component {
   constructor(){
@@ -24,7 +25,7 @@ class App extends React.Component {
         if(response.ok) {
           return response.json()
         } else {
-          throw new Error
+          throw new Error('Something went wrong retrieving data')
         }
       })
       .then(resJsonFolders => this.setState({
@@ -37,7 +38,7 @@ class App extends React.Component {
           if(response.ok) {
             return response.json()
           } else {
-            throw new Error
+            throw new Error('Something went wrong retrieving data')
           }
         })
         .then(resJsonNotes => this.setState({
@@ -54,7 +55,6 @@ class App extends React.Component {
         return note
       }
     })
-    console.log(indexToRemove)
     currentState.splice(indexToRemove, 1)
     this.setState({
       notes: currentState
@@ -63,15 +63,13 @@ class App extends React.Component {
 
   handleAddFolder = (event) => {
     event.preventDefault();
-    console.log(event.target.newFolder.value);
     const newFolder = event.target.newFolder.value; 
     if (newFolder.length === 0) {
       alert('Please enter a folder name')
-      // throw new Error('must enter a folder name')
     } else {
       this.setState({
         folders: [...this.state.folders, {id: uuid(), name: newFolder}]
-      }) 
+      }); 
     }
 
     /*
@@ -99,7 +97,6 @@ class App extends React.Component {
     }
     if (newNote.name.length === 0 || newNote.content.length === 0) {
       alert('Please enter a note name and content')
-      // throw new Error('must enter a note name and content')
     } else {
       this.setState({
         notes: [...this.state.notes, newNote]
@@ -119,23 +116,35 @@ class App extends React.Component {
     return (
       <MyContext.Provider value={ContextData}>
         <div className="App">
-          <header><Link to='/'><h1>Noteful</h1></Link></header>
-          <ErrorBoundary>
-            <FolderList /> 
-          </ErrorBoundary>   
-          <Route exact path='/' 
+          <header><Link to='/'><h1>Noteful</h1></Link></header>   
+          <Route 
+          exact path='/' 
           render={(props) => (
             <Main {...props} />
           )} />
-          <Route path='/folder/:folderId'
-          render={(props) => (
-            <Folder {...props} />
+          <ErrorBoundary>
+            <Route path='/folder/:folderId'
+            render={(props) => (
+              <Folder {...props} />
+            )} />
+          </ErrorBoundary>
+          <Route
+          path='/addfolder'
+          render={
+          (props) => (          
+            <AddFolder {...props} />                
           )} />
-          <Route path='/note/:noteId' 
+          <Route 
+          path='/addnote'
+          render={
+          (props) => (
+            <AddNote {...props} />
+          )} />
+          <Route 
+          path='/note/:noteId' 
           render={(props) => (
             <Note {...props} />
           )} />
-         
         </div>
       </MyContext.Provider>
     );

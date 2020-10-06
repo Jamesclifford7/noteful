@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import MyContext from './MyContext'
+import MyContext from '../MyContext/MyContext'
 import PropTypes from 'prop-types'
 
 
@@ -8,9 +8,6 @@ class Note extends React.Component {
     static contextType = MyContext
     render() {
         const notesList = this.context.notes.map(note => note)   
-        // console.log(this.props)     
-        // console.log(notesList)
-
         return (
             <>
                 {
@@ -30,7 +27,7 @@ class Note extends React.Component {
 }
 
 Note.propTypes = {
-    props: PropTypes.object
+    noteId: PropTypes.string
 }
 
 export default Note
