@@ -3,18 +3,26 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.App header {
+    text-align: center; 
+    border-bottom: solid; 
+    margin-bottom: 25px;
+    background-color: #07020D;
+}
+
 header h1 {
-    text-align: center;
+    padding: 30px;
+    margin: 0 auto;
+    width: 20%;
 }
 
-/*
-.note-display {
-    flex: 1;
+a:link, a:visited {
+    text-decoration: none;
+    color: whitesmoke;
 }
 
-
-.App header .folder-list, .App .note-display {
-    display: inline-flex;
-
+a:hover {
+    text-decoration: underline;
 }
-*/
+
+/* border: solid; */

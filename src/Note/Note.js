@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import MyContext from '../MyContext/MyContext'
 import PropTypes from 'prop-types'
-
+import '../Note/Note.css'
 
 class Note extends React.Component {
     static contextType = MyContext

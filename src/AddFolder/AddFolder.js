@@ -21,6 +21,8 @@ class AddFolder extends React.Component {
             </div> 
         })  
 
+        // console.log(this.props.history.push)
+
         return (
             <div className="container">
                 <div className="folder-list">
@@ -34,7 +36,6 @@ class AddFolder extends React.Component {
                         <input 
                         type="text"
                         id="newFolder" 
-                        name="newFolder"
                         />
                         <button type="submit">Submit</button>
                     </form>  

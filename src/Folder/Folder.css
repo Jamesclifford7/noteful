@@ -1,4 +1,5 @@
 .notes-list {
+    background-color: #5DB7DE;
     border: solid;
     width: 50%;
     display: inline-flex; 
@@ -7,6 +8,7 @@
     float: right;
     margin-top: 0;
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .note {

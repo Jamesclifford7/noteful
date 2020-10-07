@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, withRouter } from 'react-router-dom'
 import Main from './Main/Main'
 import Folder from './Folder/Folder'
 import Note from './Note/Note'
@@ -69,7 +69,8 @@ class App extends React.Component {
     } else {
       this.setState({
         folders: [...this.state.folders, {id: uuid(), name: newFolder}]
-      }); 
+      });
+      this.props.history.push("/");
     }
 
     /*
@@ -100,7 +101,8 @@ class App extends React.Component {
     } else {
       this.setState({
         notes: [...this.state.notes, newNote]
-      })
+      });
+      this.props.history.push("/");
     }
   }
 
@@ -151,7 +153,7 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
 
 /* 
 
