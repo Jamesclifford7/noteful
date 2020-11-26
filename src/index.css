@@ -3,9 +3,10 @@ body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('../src/Images/office-photo-1.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: url('../src/Images/composition_notebook_design.png');
+  background-size: 1000px auto; 
+  /* background-repeat: no-repeat; 
+  background-size: 4500px auto; */
 }
 
 code {

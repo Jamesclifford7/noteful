@@ -16,7 +16,7 @@ class AddFolder extends React.Component {
         
         const fullNotesList = this.context.notes.map((n, idx) => {
             return <div className="note" key={idx}>
-            <Link to={`/note/${n.id}`}><h4>{n.name}</h4></Link>
+            <Link to={`/note/${n.id}`}><h4>{n.title}</h4></Link>
             <button type='button' value={n.id} data-nodeid={n.id} onClick={event => this.context.deleteHandler(event)}>Delete Note</button>
             </div> 
         })  

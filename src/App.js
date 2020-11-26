@@ -7,7 +7,7 @@ import Note from './Note/Note'
 import AddNote from './AddNote/AddNote'
 import MyContext from './MyContext/MyContext'
 import AddFolder from './AddFolder/AddFolder'
-import uuid from 'react-uuid'
+// import uuid from 'react-uuid'
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 class App extends React.Component {
@@ -20,7 +20,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:9090/folders')
+    // fetch('http://localhost:8000/api/folders/'
+    fetch('https://cryptic-thicket-26447.herokuapp.com/api/folders/', {
+      method: 'GET', 
+    })
       .then(function(response) {
         if(response.ok) {
           return response.json()
@@ -29,51 +32,88 @@ class App extends React.Component {
         }
       })
       .then(resJsonFolders => this.setState({
-        folders: resJsonFolders
+        folders: resJsonFolders.folders
       }))
       .catch(error => console.log(error + 'oops! something went wrong (folders)'));
-      
-      fetch('http://localhost:9090/notes')
-        .then(function(response) {
-          if(response.ok) {
-            return response.json()
-          } else {
-            throw new Error('Something went wrong retrieving data')
-          }
-        })
-        .then(resJsonNotes => this.setState({
-            notes: resJsonNotes
-        }))
-        .catch(error => console.log(error + 'oops! something went wrong (notes)'));
+    
+    // fetch('http://localhost:8000/api/notes/'
+    fetch('https://cryptic-thicket-26447.herokuapp.com/api/notes/', {
+      method: 'GET', 
+    })
+      .then(function(response) {
+        if(response.ok) {
+          return response.json()
+        } else {
+          throw new Error('Something went wrong retrieving data')
+        }
+      })
+      .then(resJsonNotes => this.setState({
+          notes: resJsonNotes.notes
+      }))
+      .catch(error => console.log(error + 'oops! something went wrong (notes)')); 
   } 
 
   handleDelete = (event) => {
-    // event.target.parentNode.remove()    
+    // event.target.parentNode.remove() 
     let currentState = this.state.notes
-    let indexToRemove = currentState.findIndex(note => {
-      if (note.id === event.target.value) {
-        return note
-      }
+    const noteId = event.target.value
+
+    fetch(`https://cryptic-thicket-26447.herokuapp.com/api/notes/${noteId}`, {
+      method: 'DELETE'
     })
-    currentState.splice(indexToRemove, 1)
-    this.setState({
+    .then((res) => {
+      console.log(res)
+      let indexToRemove = currentState.findIndex(note => {
+        if (note.id === parseInt(noteId)) {
+          return note
+        }
+      })
+      
+      currentState.splice(indexToRemove, 1)
+      this.setState({
       notes: currentState
-    })
+      }) 
+    }) 
+
   }
 
   handleAddFolder = (event) => {
     event.preventDefault();
-    const newFolder = event.target.newFolder.value; 
-    if (newFolder.length === 0) {
+    const newFolderName = event.target.newFolder.value; 
+    console.log(newFolderName)
+    
+    if (newFolderName.length === 0) {
       alert('Please enter a folder name')
     } else {
+      fetch('https://cryptic-thicket-26447.herokuapp.com/api/folders/', {
+        method: 'POST', 
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          "name": newFolderName
+        })
+      })
+      .then(res => {
+        if(res.ok) {
+          return res.json()
+        } throw new Error()
+      })
+      .then((response) => {
+        this.setState({
+          folders: [...this.state.folders, {name: newFolderName}]
+        })
+         
+      }) 
+    }
+      /* 
       this.setState({
         folders: [...this.state.folders, {id: uuid(), name: newFolder}]
       });
       this.props.history.push("/");
-    }
+    } 
 
-    /*
+    
 
     or:
 
@@ -91,19 +131,40 @@ class App extends React.Component {
     event.preventDefault();
     const { newNoteName, folderSelect, content } = event.target
     const newNote = {
-      id: uuid(), 
-      name: newNoteName.value, 
-      folderId: folderSelect.value, 
-      content: content.value
+      title: newNoteName.value,
+      content: content.value, 
+      folderid: folderSelect.value
     }
-    if (newNote.name.length === 0 || newNote.content.length === 0) {
+    const newNoteTitle = newNote.title
+    const newNoteContent = newNote.content
+    const newNoteFolderid = newNote.folderid
+    if (newNote.title.length === 0 || newNote.content.length === 0) {
       alert('Please enter a note name and content')
     } else {
-      this.setState({
-        notes: [...this.state.notes, newNote]
-      });
-      this.props.history.push("/");
-    }
+      fetch('https://cryptic-thicket-26447.herokuapp.com/api/notes/', {
+        method: 'POST', 
+        headers: {
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({
+          "title": newNoteTitle, 
+          "content": newNoteContent, 
+          "folderid": newNoteFolderid
+        })
+      })
+      .then(res => {
+        if(res.ok) {
+          return res.json()
+        } throw new Error
+      })
+      .then((res) => {
+
+        this.setState({
+          notes: [...this.state.notes, newNote]
+        })
+      })
+      
+    }  
   }
 
   render() {
