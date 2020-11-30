@@ -6,13 +6,31 @@ import MyContext from '../MyContext/MyContext'
 
 class FolderList extends React.Component {
     static contextType = MyContext; 
-
+    
     render() {
+        
+        
         return (
+
             <div className="folder-list">
                 {this.context.folders.map((f, idx) => {
+                let notesList = []
+                
+
+                let numOfNotes = this.context.notes.filter(note => {
+                        if (note.folderid === f.id) {
+                            return note
+                        }
+                    })
+                
                 return <div className="folder" key={idx} folderid={f.id}>
-                        <Link to={`/folder/${f.id}`}><h3>{f.name}</h3></Link>
+                        <Link to={`/folder/${f.id}`}><h3>{f.name}</h3></Link>  
+                        <p>
+                            {
+                                numOfNotes.length
+                            }
+                        </p>              
+                        
                     </div>
                 })}
                 <div className="add-buttons"> 

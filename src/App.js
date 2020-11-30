@@ -51,6 +51,7 @@ class App extends React.Component {
           notes: resJsonNotes.notes
       }))
       .catch(error => console.log(error + 'oops! something went wrong (notes)')); 
+      
   } 
 
   handleDelete = (event) => {
@@ -62,7 +63,6 @@ class App extends React.Component {
       method: 'DELETE'
     })
     .then((res) => {
-      console.log(res)
       let indexToRemove = currentState.findIndex(note => {
         if (note.id === parseInt(noteId)) {
           return note
@@ -73,6 +73,7 @@ class App extends React.Component {
       this.setState({
       notes: currentState
       }) 
+      // this.props.history.push('/')
     }) 
 
   }
@@ -100,10 +101,11 @@ class App extends React.Component {
         } throw new Error()
       })
       .then((response) => {
+        console.log(response)
         this.setState({
-          folders: [...this.state.folders, {name: newFolderName}]
+          folders: [...this.state.folders, response]
         })
-         
+        this.props.history.push('/')
       }) 
     }
       /* 
@@ -133,7 +135,7 @@ class App extends React.Component {
     const newNote = {
       title: newNoteName.value,
       content: content.value, 
-      folderid: folderSelect.value
+      folderid: parseInt(folderSelect.value)
     }
     const newNoteTitle = newNote.title
     const newNoteContent = newNote.content
@@ -158,10 +160,10 @@ class App extends React.Component {
         } throw new Error
       })
       .then((res) => {
-
         this.setState({
-          notes: [...this.state.notes, newNote]
+          notes: [...this.state.notes, res]
         })
+        this.props.history.push('/')
       })
       
     }  

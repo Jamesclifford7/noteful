@@ -8,7 +8,6 @@ class Note extends React.Component {
     static contextType = MyContext
     render() {
         const notesList = this.context.notes.map(note => note) 
-        
         return (
             <>
                 {
@@ -23,13 +22,14 @@ class Note extends React.Component {
                         : ""
                     )
                 }
-            </>    
+            </>
         )
     }
 }
 
+/*
 Note.propTypes = {
     noteId: PropTypes.string
-}
+} */
 
 export default Note
